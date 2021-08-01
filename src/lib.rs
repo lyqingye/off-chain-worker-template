@@ -1,12 +1,11 @@
-
-pub mod keyring;
-pub mod subscribe;
-pub mod util;
-pub mod events;
-pub mod error;
 pub mod chain;
 pub mod config;
+pub mod error;
+pub mod events;
+pub mod keyring;
 pub mod macros;
+pub mod subscribe;
+pub mod util;
 
 /// prost definition
 pub const COSMOS_SDK_VERSION: &str = "7648bfca45b9d0897103ec739210607dce77c4fb";

@@ -1,20 +1,16 @@
-use std::{
-    fmt::Debug,
-    sync::Arc,
-};
 use crossbeam_channel as channel;
 use dyn_clone::DynClone;
+use std::{fmt::Debug, sync::Arc};
 
 use crate::{
-    error::Error,
-    subscribe::monitor::{EventBatch, Result as MonitorResult},
-    keyring::KeyEntry,
     chain::QueryTxRequest,
+    error::Error,
     events::Event,
+    keyring::KeyEntry,
+    subscribe::monitor::{EventBatch, Result as MonitorResult},
 };
-use tendermint::chain::Id as ChainId;
 use serde::{Serialize, Serializer};
-
+use tendermint::chain::Id as ChainId;
 
 pub type Subscription = channel::Receiver<Arc<MonitorResult<EventBatch>>>;
 pub type ReplyTo<T> = channel::Sender<Result<T, Error>>;

@@ -1,10 +1,8 @@
 use std::{sync::Arc, thread};
 
-use crossbeam_channel as channel;
-use tokio::runtime::Runtime as TokioRuntime;
-use tracing::error;
-use crate::subscribe::monitor::{EventReceiver,TxMonitorCmd};
 use crate::chain::Chain;
+use crate::subscribe::monitor::{EventReceiver, TxMonitorCmd};
+use tokio::runtime::Runtime as TokioRuntime;
 
 pub struct Threads {
     pub chain_runtime: thread::JoinHandle<()>,
@@ -32,6 +30,3 @@ pub struct ChainRuntime<C: Chain> {
     #[allow(dead_code)]
     rt: Arc<TokioRuntime>,
 }
-
-
-

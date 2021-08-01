@@ -7,18 +7,9 @@ use std::{
     time::{Duration, Instant},
 };
 
-use bech32::{ToBase32, Variant};
-use bitcoin::hashes::hex::ToHex;
-use itertools::Itertools;
-use prost::Message;
-use prost_types::Any;
-use tendermint::account::Id as AccountId;
-use tendermint_rpc::query::{Query,EventType};
-use tendermint_rpc::endpoint::tx::Response as ResultTx;
-use tendermint_rpc::{endpoint::broadcast::tx_sync::Response, Client, HttpClient, Order};
-use tokio::runtime::Runtime as TokioRuntime;
-use tonic::codegen::http::Uri;
-use tracing::{debug, trace, warn, info};
+use super::Chain;
+use crate::chain::{QueryTxHash, QueryTxRequest};
+use crate::config::{ChainConfig, GasPrice};
 use crate::cosmos::auth::v1beta1::{BaseAccount, QueryAccountRequest};
 use crate::cosmos::base::tendermint::v1beta1::service_client::ServiceClient;
 use crate::cosmos::base::tendermint::v1beta1::GetNodeInfoRequest;
@@ -28,16 +19,24 @@ use crate::cosmos::tx::v1beta1::{
     AuthInfo, Fee, ModeInfo, SignDoc, SignerInfo, SimulateRequest, SimulateResponse, Tx, TxBody,
     TxRaw,
 };
-use crate::events::Event;
 use crate::error::{Error, Kind};
-use crate::subscribe::monitor::{EventMonitor, EventReceiver};
+use crate::events::Event;
 use crate::keyring::{KeyEntry, KeyRing, Store};
-use crate::{subscribe::monitor::TxMonitorCmd};
+use crate::subscribe::monitor::TxMonitorCmd;
+use crate::subscribe::monitor::{EventMonitor, EventReceiver};
+use bech32::{ToBase32, Variant};
+use bitcoin::hashes::hex::ToHex;
+use itertools::Itertools;
+use prost::Message;
+use prost_types::Any;
 use rust_decimal::prelude::*;
-use super::Chain;
+use tendermint::account::Id as AccountId;
 use tendermint::chain::Id as ChainId;
-use crate::chain::{QueryTxRequest, QueryTxHash};
-use crate::config::{ChainConfig,GasPrice};
+use tendermint_rpc::query::{EventType, Query};
+use tendermint_rpc::{endpoint::broadcast::tx_sync::Response, Client, HttpClient, Order};
+use tokio::runtime::Runtime as TokioRuntime;
+use tonic::codegen::http::Uri;
+use tracing::{debug, info, trace, warn};
 
 const DEFAULT_MAX_GAS: u64 = 3_000_000;
 const DEFAULT_GAS_PRICE_ADJUSTMENT: f64 = 0.1;
@@ -276,13 +275,13 @@ impl CosmosSdkChain {
     /// The actual gas cost, when a transaction is executed, may be slightly higher than the
     /// one returned by the simulation.
     fn apply_adjustment_to_gas(&self, gas_amount: u64) -> u64 {
-        let adjustment = (Decimal::from_u64(gas_amount).unwrap() * Decimal::from_f64(self.gas_adjustment()).unwrap()).ceil().to_u64().unwrap();
-        min(
-            gas_amount + adjustment,
-            self.max_gas()
-        )
+        let adjustment = (Decimal::from_u64(gas_amount).unwrap()
+            * Decimal::from_f64(self.gas_adjustment()).unwrap())
+        .ceil()
+        .to_u64()
+        .unwrap();
+        min(gas_amount + adjustment, self.max_gas())
     }
-
 
     /// The maximum fee the relayer pays for a transaction
     fn max_fee_in_coins(&self) -> Coin {
@@ -490,9 +489,9 @@ impl CosmosSdkChain {
                         ))];
 
                         // Otherwise, try to resolve transaction hash to the corresponding events.
-                        } else if let Ok(events_per_tx) =
-                            self.query_events_from_txs(QueryTxRequest::Transaction(QueryTxHash(response.hash)))
-                        {
+                        } else if let Ok(events_per_tx) = self.query_events_from_txs(
+                            QueryTxRequest::Transaction(QueryTxHash(response.hash)),
+                        ) {
                             // If we get events back, progress was made, so we replace the events
                             // with the new ones. in both cases we will check in the next iteration
                             // whether or not the transaction was fully committed.
@@ -705,7 +704,7 @@ impl Chain for CosmosSdkChain {
                 if response.txs.is_empty() {
                     Ok(vec![])
                 } else {
-                    let tx = response.txs.remove(0);
+                    // let tx = response.txs.remove(0);
                     // TODO implementation
                     Ok(vec![])
                 }
@@ -734,11 +733,10 @@ async fn broadcast_tx_sync(
 
 /// Uses the GRPC client to retrieve the account sequence
 async fn query_account(chain: &CosmosSdkChain, address: String) -> Result<BaseAccount, Error> {
-    let mut client = crate::cosmos::auth::v1beta1::query_client::QueryClient::connect(
-        chain.grpc_addr.clone(),
-    )
-    .await
-    .map_err(|e| Kind::Grpc.context(e))?;
+    let mut client =
+        crate::cosmos::auth::v1beta1::query_client::QueryClient::connect(chain.grpc_addr.clone())
+            .await
+            .map_err(|e| Kind::Grpc.context(e))?;
 
     let request = tonic::Request::new(QueryAccountRequest { address });
 
@@ -803,7 +801,8 @@ fn tx_body_and_bytes(proto_msgs: Vec<Any>) -> Result<(TxBody, Vec<u8>), Error> {
 }
 
 fn calculate_fee(adjusted_gas_amount: u64, gas_price: &GasPrice) -> Coin {
-    let fee_amount = Decimal::from_u64(adjusted_gas_amount).unwrap() * Decimal::from_f64(gas_price.price).unwrap();
+    let fee_amount = Decimal::from_u64(adjusted_gas_amount).unwrap()
+        * Decimal::from_f64(gas_price.price).unwrap();
 
     return Coin {
         denom: gas_price.denom.to_string(),

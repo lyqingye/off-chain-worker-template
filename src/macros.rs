@@ -67,4 +67,3 @@ macro_rules! time {
         let _timer = $crate::macros::profiling::Timer::new(format!($($arg)*));
     };
 }
-

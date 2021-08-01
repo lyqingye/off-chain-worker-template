@@ -386,4 +386,3 @@ fn disk_store_path(folder_name: &str) -> Result<PathBuf, Error> {
 
     Ok(folder)
 }
-

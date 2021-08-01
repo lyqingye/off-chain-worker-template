@@ -13,21 +13,27 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52b2c82-cb47-48bb-a660-312b1d2d6a44" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/bin/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chain.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chain/cosmos.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/error.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/events.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/block_on.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/diff.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/iter.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/recv_multiple.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/retry.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/serde.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/stream.rs" afterDir="false" />
+    <list default="true" id="f52b2c82-cb47-48bb-a660-312b1d2d6a44" name="Default Changelist" comment="remove unused error">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chain.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chain/cosmos.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/cosmos.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chain/handle.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/handle.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chain/runtime.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/runtime.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/error.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/events.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyring.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyring.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyring/errors.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyring/errors.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyring/pub_key.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyring/pub_key.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/macros.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/macros.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscribe.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscribe/bus.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/bus.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscribe/monitor.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/monitor.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscribe/transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/transform.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +60,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="GO_FMT" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
@@ -72,15 +79,15 @@
       <recent name="$PROJECT_DIR$/src/event" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Run main" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package off-chain-workers-template --bin main" />
+  <component name="RunManager" selected="Cargo.Test tests::test_event_subscribe">
+    <configuration name="Test main::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package off-chain-workers-template --bin main tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="backtrace" value="FULL" />
+      <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -88,9 +95,82 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test tests::it_works (1)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package off-chain-workers-template --bin main tests::it_works -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::it_works" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package off-chain-workers-template --bin main tests::it_works -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs>
+        <env name="RUST_LOG" value="main::log::target=debug" />
+      </envs>
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::test_event_subscribe" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package off-chain-workers-template --bin main tests::test_event_subscribe -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test tests::test_key_store" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package off-chain-workers-template --bin main tests::test_key_store -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Cargo.Test tests::it_works" />
+      <item itemvalue="Cargo.Test tests::it_works (1)" />
+      <item itemvalue="Cargo.Test tests::test_key_store" />
+      <item itemvalue="Cargo.Test tests::test_event_subscribe" />
+      <item itemvalue="Cargo.Test main::tests" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Run main" />
+        <item itemvalue="Cargo.Test tests::test_event_subscribe" />
+        <item itemvalue="Cargo.Test tests::test_key_store" />
+        <item itemvalue="Cargo.Test tests::it_works (1)" />
+        <item itemvalue="Cargo.Test main::tests" />
+        <item itemvalue="Cargo.Test tests::it_works" />
       </list>
     </recent_temporary>
   </component>
@@ -114,35 +194,48 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add readme" />
+    <MESSAGE value="remove unused error" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove unused error" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="724" y="350" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1627734975375">
+    <state x="724" y="350" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1627811124373">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state x="724" y="350" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.2560.1413@0.27.2560.1413" timestamp="1627734975375" />
-    <state width="1836" height="440" key="GridCell.Tab.0.bottom" timestamp="1627735347803">
+    <state x="724" y="350" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.2560.1413@0.27.2560.1413" timestamp="1627811124373" />
+    <state x="1104" y="424" width="313" height="542" key="EnvironmentVariablesDialog" timestamp="1627810079181">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="1836" height="440" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1627735347803" />
-    <state width="1836" height="440" key="GridCell.Tab.0.center" timestamp="1627735347802">
+    <state x="1104" y="424" width="313" height="542" key="EnvironmentVariablesDialog/0.27.2560.1413@0.27.2560.1413" timestamp="1627810079181" />
+    <state width="2115" height="390" key="GridCell.Tab.0.bottom" timestamp="1627814291776">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="1836" height="440" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1627735347802" />
-    <state width="1836" height="440" key="GridCell.Tab.0.left" timestamp="1627735347802">
+    <state width="2115" height="390" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291776" />
+    <state width="2115" height="390" key="GridCell.Tab.0.center" timestamp="1627814291775">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="1836" height="440" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1627735347802" />
-    <state width="1836" height="440" key="GridCell.Tab.0.right" timestamp="1627735347802">
+    <state width="2115" height="390" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291775" />
+    <state width="2115" height="390" key="GridCell.Tab.0.left" timestamp="1627814291775">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="1836" height="440" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1627735347802" />
+    <state width="2115" height="390" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291775" />
+    <state width="2115" height="390" key="GridCell.Tab.0.right" timestamp="1627814291776">
+      <screen x="0" y="27" width="2560" height="1413" />
+    </state>
+    <state width="2115" height="390" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291776" />
     <state x="747" y="327" width="1037" height="737" key="SettingsEditor" timestamp="1627734954403">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="747" y="327" width="1037" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1627734954403" />
-    <state x="1118" y="348" width="1020" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1627729779965">
+    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2" timestamp="1627810093801">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state x="1118" y="348" width="1020" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.2560.1413@0.27.2560.1413" timestamp="1627729779965" />
+    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1627810093801" />
+    <state x="1118" y="348" width="1020" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1627805366781">
+      <screen x="0" y="27" width="2560" height="1413" />
+    </state>
+    <state x="1118" y="348" width="1020" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.2560.1413@0.27.2560.1413" timestamp="1627805366781" />
     <state x="1309" y="419" width="672" height="678" key="search.everywhere.popup" timestamp="1627722757329">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>

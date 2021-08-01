@@ -44,4 +44,3 @@ impl<T> EventBus<T> {
         }
     }
 }
-

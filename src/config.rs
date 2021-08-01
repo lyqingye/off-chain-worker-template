@@ -1,12 +1,12 @@
 //! Relayer configuration
 
+use crate::error;
+use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::{fmt, fs, fs::File, io::Write, path::Path, time::Duration};
-use serde_derive::{Deserialize, Serialize};
-use crate::error;
 use tendermint::chain::Id as ChainId;
 
-#[derive(Default,Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GasPrice {
     pub price: f64,
     pub denom: String,

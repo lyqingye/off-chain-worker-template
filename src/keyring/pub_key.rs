@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use serde::{Deserialize, Deserializer};
+use std::str::FromStr;
 use subtle_encoding::base64;
 use tracing::{error, trace};
 
@@ -89,4 +89,3 @@ impl FromStr for EncodedPubKey {
         }
     }
 }
-

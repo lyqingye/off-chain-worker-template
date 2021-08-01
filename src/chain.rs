@@ -3,18 +3,17 @@ use std::sync::Arc;
 use prost_types::Any;
 use tokio::runtime::Runtime as TokioRuntime;
 
-use crate::events::Event;
-use crate::error::Error;
-use crate::subscribe::monitor::{TxMonitorCmd, EventReceiver};
-use crate::keyring::{KeyEntry, KeyRing};
-use tendermint::chain::Id as ChainId;
-use tendermint::abci::transaction::Hash;
 use crate::config::ChainConfig;
-
+use crate::error::Error;
+use crate::events::Event;
+use crate::keyring::{KeyEntry, KeyRing};
+use crate::subscribe::monitor::{EventReceiver, TxMonitorCmd};
+use tendermint::abci::transaction::Hash;
+use tendermint::chain::Id as ChainId;
 
 pub mod cosmos;
-pub mod runtime;
 pub mod handle;
+pub mod runtime;
 
 /// Used for queries and not yet standardized in channel's query.proto
 #[derive(Clone, Debug)]
@@ -28,7 +27,7 @@ pub struct QueryTxHash(pub Hash);
 /// Defines a blockchain as understood by the relayer
 pub trait Chain: Sized {
     /// Constructs the chain
-    fn bootstrap(config: ChainConfig,rt: Arc<TokioRuntime>) -> Result<Self, Error>;
+    fn bootstrap(config: ChainConfig, rt: Arc<TokioRuntime>) -> Result<Self, Error>;
 
     /// Initializes and returns the event monitor (if any) associated with this chain.
     fn init_event_monitor(

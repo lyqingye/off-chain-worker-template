@@ -6,11 +6,11 @@ use futures::{
     stream::{self, select_all, StreamExt},
     Stream, TryStreamExt,
 };
+use tendermint::chain::Id as ChainId;
 use thiserror::Error;
 use tokio::task::JoinHandle;
 use tokio::{runtime::Runtime as TokioRuntime, sync::mpsc};
 use tracing::{debug, error, info, trace};
-use tendermint::chain::Id as ChainId;
 
 use tendermint_rpc::{
     error::Code,
@@ -20,12 +20,12 @@ use tendermint_rpc::{
     WebSocketClientDriver,
 };
 
+use crate::events::Event;
 use crate::util::{
     retry::{retry_count, retry_with_index, RetryResult},
     stream::try_group_while,
 };
 use tendermint::block::Height;
-use crate::events::Event;
 
 mod retry_strategy {
     use crate::util::retry::clamp_total;
@@ -358,7 +358,7 @@ impl EventMonitor {
             if let Ok(cmd) = self.rx_cmd.try_recv() {
                 return match cmd {
                     MonitorCmd::Shutdown => Next::Abort,
-                }
+                };
             }
 
             let result = rt.block_on(async {

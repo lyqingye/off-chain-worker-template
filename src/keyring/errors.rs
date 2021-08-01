@@ -44,4 +44,3 @@ impl Kind {
         Context::new(self, Some(source.into()))
     }
 }
-

@@ -32,7 +32,7 @@ impl From<NewBlock> for Event {
 
 impl fmt::Display for NewBlock {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        writeln!(f, "height: {}",self.height)?;
+        writeln!(f, "height: {}", self.height)?;
         Ok(())
     }
 }
