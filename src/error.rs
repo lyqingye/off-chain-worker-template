@@ -95,13 +95,6 @@ pub enum Kind {
         endpoint: String,
         cause: String,
     },
-
-    #[error("Hermes health check failed while verifying the application compatibility for chain {chain_id}:{address}; caused by: {cause}")]
-    SdkModuleVersion {
-        chain_id: ChainId,
-        address: String,
-        cause: String,
-    },
 }
 
 impl Kind {
