@@ -15,6 +15,11 @@ pub mod cosmos {
             include!("prost/cosmos.auth.v1beta1.rs");
         }
     }
+    pub mod bank {
+        pub mod v1beta1 {
+            include!("prost/cosmos.bank.v1beta1.rs");
+        }
+    }
     pub mod staking {
         pub mod v1beta1 {
             include!("prost/cosmos.staking.v1beta1.rs");

@@ -11,6 +11,7 @@ use super::Chain;
 use crate::chain::{QueryTxHash, QueryTxRequest};
 use crate::config::{ChainConfig, GasPrice};
 use crate::cosmos::auth::v1beta1::{BaseAccount, QueryAccountRequest};
+use crate::cosmos::bank::v1beta1::{QueryBalanceRequest, QueryBalanceResponse};
 use crate::cosmos::base::tendermint::v1beta1::service_client::ServiceClient;
 use crate::cosmos::base::tendermint::v1beta1::GetNodeInfoRequest;
 use crate::cosmos::base::v1beta1::Coin;
@@ -19,6 +20,7 @@ use crate::cosmos::tx::v1beta1::{
     AuthInfo, Fee, ModeInfo, SignDoc, SignerInfo, SimulateRequest, SimulateResponse, Tx, TxBody,
     TxRaw,
 };
+use crate::error::Kind::BalanceOfDenomNotFound;
 use crate::error::{Error, Kind};
 use crate::events::Event;
 use crate::keyring::{KeyEntry, KeyRing, Store};
@@ -591,6 +593,20 @@ impl Chain for CosmosSdkChain {
         &mut self.keybase
     }
 
+    /// Get the account for the signer
+    fn get_signer(&mut self) -> Result<String, Error> {
+        crate::time!("get_signer");
+
+        // Get the key from key seed file
+        let key = self
+            .keybase()
+            .get_key(&self.config.key_name)
+            .map_err(|e| Kind::KeyBase.context(e))?;
+
+        let bech32 = encode_to_bech32(&key.address.to_hex(), &self.config.account_prefix)?;
+        Ok(bech32)
+    }
+
     /// Send one or more transactions that include all the specified messages.
     /// The `proto_msgs` are split in transactions such they don't exceed the configured maximum
     /// number of messages per transaction and the maximum transaction size.
@@ -646,20 +662,6 @@ impl Chain for CosmosSdkChain {
             .collect();
 
         Ok(events)
-    }
-
-    /// Get the account for the signer
-    fn get_signer(&mut self) -> Result<String, Error> {
-        crate::time!("get_signer");
-
-        // Get the key from key seed file
-        let key = self
-            .keybase()
-            .get_key(&self.config.key_name)
-            .map_err(|e| Kind::KeyBase.context(e))?;
-
-        let bech32 = encode_to_bech32(&key.address.to_hex(), &self.config.account_prefix)?;
-        Ok(bech32)
     }
 
     /// Get the signing key
@@ -754,6 +756,40 @@ async fn query_account(chain: &CosmosSdkChain, address: String) -> Result<BaseAc
     .map_err(|e| Kind::Grpc.context(e))?;
 
     Ok(base_account)
+}
+
+/// Uses the GRPC client to retrieve the account balance
+async fn query_balance(chain: &CosmosSdkChain, address: String) -> Result<Coin, Error> {
+    query_balance_by_denom(chain,address,chain.config.gas_price.denom.clone()).await
+}
+
+/// Uses the GRPC client to retrieve the account balance
+async fn query_balance_by_denom(chain: &CosmosSdkChain, address: String, denom: String) -> Result<Coin, Error> {
+    let mut client =
+        crate::cosmos::bank::v1beta1::query_client::QueryClient::connect(chain.grpc_addr.clone())
+            .await
+            .map_err(|e| Kind::Grpc.context(e))?;
+
+    let request = tonic::Request::new(QueryBalanceRequest {
+        address: address.clone(),
+        denom: denom.clone(),
+    });
+
+    let response = client.balance(request).await;
+
+    if let Some(coin) = response
+        .map_err(|e| Kind::Grpc.context(e))?
+        .into_inner()
+        .balance
+    {
+        Ok(coin)
+    } else {
+        Err(BalanceOfDenomNotFound {
+            address: address.clone(),
+            denom: denom.clone(),
+        }
+        .into())
+    }
 }
 
 fn encode_to_bech32(address: &str, account_prefix: &str) -> Result<String, Error> {

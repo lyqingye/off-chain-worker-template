@@ -70,6 +70,9 @@ pub enum Kind {
     #[error("Keybase error")]
     KeyBase,
 
+    #[error("did not found balance of {denom} for {address}")]
+    BalanceOfDenomNotFound { address: String, denom: String },
+
     /// Invalid chain identifier
     #[error("invalid chain identifier format: {0}")]
     ChainIdentifier(String),

@@ -13,27 +13,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52b2c82-cb47-48bb-a660-312b1d2d6a44" name="Default Changelist" comment="remove unused error">
+    <list default="true" id="f52b2c82-cb47-48bb-a660-312b1d2d6a44" name="Default Changelist" comment="code format">
+      <change afterPath="$PROJECT_DIR$/src/prost/cosmos.bank.v1beta1.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bin/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chain.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chain/cosmos.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/cosmos.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chain/handle.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/handle.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chain/runtime.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/runtime.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/error.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/events.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyring.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyring.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyring/errors.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyring/errors.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyring/pub_key.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyring/pub_key.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/macros.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/macros.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscribe.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscribe/bus.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/bus.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscribe/monitor.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/monitor.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscribe/transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/transform.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +182,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add readme" />
     <MESSAGE value="remove unused error" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove unused error" />
+    <MESSAGE value="code format" />
+    <option name="LAST_COMMIT_MESSAGE" value="code format" />
   </component>
   <component name="WindowStateProjectService">
     <state x="724" y="350" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1627811124373">
@@ -208,30 +194,30 @@
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="1104" y="424" width="313" height="542" key="EnvironmentVariablesDialog/0.27.2560.1413@0.27.2560.1413" timestamp="1627810079181" />
-    <state width="2115" height="390" key="GridCell.Tab.0.bottom" timestamp="1627814291776">
+    <state width="2115" height="390" key="GridCell.Tab.0.bottom" timestamp="1627816530383">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="2115" height="390" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291776" />
-    <state width="2115" height="390" key="GridCell.Tab.0.center" timestamp="1627814291775">
+    <state width="2115" height="390" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1627816530383" />
+    <state width="2115" height="390" key="GridCell.Tab.0.center" timestamp="1627816530382">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="2115" height="390" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291775" />
-    <state width="2115" height="390" key="GridCell.Tab.0.left" timestamp="1627814291775">
+    <state width="2115" height="390" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1627816530382" />
+    <state width="2115" height="390" key="GridCell.Tab.0.left" timestamp="1627816530382">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="2115" height="390" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291775" />
-    <state width="2115" height="390" key="GridCell.Tab.0.right" timestamp="1627814291776">
+    <state width="2115" height="390" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1627816530382" />
+    <state width="2115" height="390" key="GridCell.Tab.0.right" timestamp="1627816530383">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state width="2115" height="390" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1627814291776" />
+    <state width="2115" height="390" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1627816530383" />
     <state x="747" y="327" width="1037" height="737" key="SettingsEditor" timestamp="1627734954403">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="747" y="327" width="1037" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1627734954403" />
-    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2" timestamp="1627810093801">
+    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2" timestamp="1627814673449">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1627810093801" />
+    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1627814673449" />
     <state x="1118" y="348" width="1020" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1627805366781">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
