@@ -6,11 +6,12 @@ use crate::{
     chain::QueryTxRequest,
     error::Error,
     events::Event,
-    keyring::KeyEntry,
     subscribe::monitor::{EventBatch, Result as MonitorResult},
 };
 use serde::{Serialize, Serializer};
 use tendermint::chain::Id as ChainId;
+
+pub mod prod;
 
 pub type Subscription = channel::Receiver<Arc<MonitorResult<EventBatch>>>;
 pub type ReplyTo<T> = channel::Sender<Result<T, Error>>;
@@ -28,17 +29,18 @@ pub trait ChainHandle: DynClone + Send + Sync + Debug {
     fn shutdown(&self) -> Result<(), Error>;
 
     /// Subscribe to the events emitted by the chain.
-    fn subscribe(&self) -> Result<Subscription, Error>;
+    // fn subscribe(&self) -> Result<Subscription, Error>;
 
     /// Send the given `msgs` to the chain, packaged as one or more transactions,
     /// and return the list of events emitted by the chain after the transaction was committed.
     fn send_msgs(&self, proto_msgs: Vec<prost_types::Any>) -> Result<Vec<Event>, Error>;
 
-    fn get_signer(&self) -> Result<String, Error>;
+    // /// signer is keyname of keystore
+    // fn get_signer(&self) -> Result<String, Error>;
 
-    fn get_key(&self) -> Result<KeyEntry, Error>;
+    // fn get_key(&self) -> Result<KeyEntry, Error>;
 
-    fn query_events_from_txs(&self, request: QueryTxRequest) -> Result<Vec<Event>, Error>;
+    // fn query_events_from_txs(&self, request: QueryTxRequest) -> Result<Vec<Event>, Error>;
 }
 
 impl Serialize for dyn ChainHandle {
@@ -48,4 +50,20 @@ impl Serialize for dyn ChainHandle {
     {
         self.id().serialize(serializer)
     }
+}
+
+#[derive(Clone, Debug)]
+pub enum ChainRequest {
+    Shutdown {
+        reply_to: ReplyTo<()>,
+    },
+
+    SendMsgs {
+        proto_msgs: Vec<prost_types::Any>,
+        reply_to: ReplyTo<Vec<Event>>,
+    },
+
+    Subscribe {
+        reply_to: ReplyTo<Subscription>,
+    },
 }

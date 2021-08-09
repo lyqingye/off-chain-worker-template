@@ -14,11 +14,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52b2c82-cb47-48bb-a660-312b1d2d6a44" name="Default Changelist" comment="code format">
-      <change afterPath="$PROJECT_DIR$/src/prost/cosmos.bank.v1beta1.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bin/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chain.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chain/cosmos.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/cosmos.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/error.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chain/handle.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/chain/handle.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/events.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscribe/monitor.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/monitor.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscribe/transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscribe/transform.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,11 +146,11 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Cargo.Test tests::it_works" />
-      <item itemvalue="Cargo.Test tests::it_works (1)" />
-      <item itemvalue="Cargo.Test tests::test_key_store" />
-      <item itemvalue="Cargo.Test tests::test_event_subscribe" />
       <item itemvalue="Cargo.Test main::tests" />
+      <item itemvalue="Cargo.Test tests::it_works (1)" />
+      <item itemvalue="Cargo.Test tests::it_works" />
+      <item itemvalue="Cargo.Test tests::test_event_subscribe" />
+      <item itemvalue="Cargo.Test tests::test_key_store" />
     </list>
     <recent_temporary>
       <list>
@@ -214,10 +217,10 @@
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="747" y="327" width="1037" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1627734954403" />
-    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2" timestamp="1627814673449">
+    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2" timestamp="1627821837541">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1627814673449" />
+    <state x="861" y="426" width="800" height="538" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1627821837541" />
     <state x="1118" y="348" width="1020" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1627805366781">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>

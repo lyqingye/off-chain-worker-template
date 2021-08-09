@@ -11,7 +11,7 @@ use super::Chain;
 use crate::chain::{QueryTxHash, QueryTxRequest};
 use crate::config::{ChainConfig, GasPrice};
 use crate::cosmos::auth::v1beta1::{BaseAccount, QueryAccountRequest};
-use crate::cosmos::bank::v1beta1::{QueryBalanceRequest, QueryBalanceResponse};
+use crate::cosmos::bank::v1beta1::QueryBalanceRequest;
 use crate::cosmos::base::tendermint::v1beta1::service_client::ServiceClient;
 use crate::cosmos::base::tendermint::v1beta1::GetNodeInfoRequest;
 use crate::cosmos::base::v1beta1::Coin;
@@ -358,12 +358,19 @@ impl CosmosSdkChain {
             );
 
             self.account = Some(account);
+
+            /// query balance
+            let balance = self.balance().expect("fail to query account balance!");
         }
 
         Ok(self
             .account
             .as_mut()
             .expect("account was supposedly just cached"))
+    }
+
+    fn balance(&mut self) -> Result<Coin, Error> {
+        self.block_on(query_balance(self, self.key()?.account))
     }
 
     fn account_number(&mut self) -> Result<u64, Error> {

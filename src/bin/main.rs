@@ -1,4 +1,57 @@
-fn main() {}
+use std::sync::Arc;
+use std::thread;
+
+use crossbeam_channel::select;
+use crossbeam_channel::Receiver;
+use off_chain_workers_template::subscribe::monitor::Error;
+use tokio::runtime::Runtime as TokioRuntime;
+use off_chain_workers_template::error::Kind;
+use off_chain_workers_template::subscribe;
+use off_chain_workers_template::subscribe::monitor::EventBatch;
+
+fn main() {
+    env_logger::init();
+    let rt = Arc::new(TokioRuntime::new().unwrap());
+
+    let fxdex = create_subscribe(rt.clone(),"ws://localhost:26657/websocket".to_string(),"fxdex".to_string());
+    //let band = create_subscribe(rt.clone(),"ws://rpc-laozi-testnet2.bandchain.org:26657/websocket".to_string(),"bandchain".to_string());
+
+    loop {
+        select! {
+            recv(fxdex) -> ev_batch => {
+                 match ev_batch {
+                        Ok(_) => {
+                           // info!("{:?}",event_batch);
+                        },
+                        Err(e) => panic!("select event fail, cause by: {}",e.to_string()),
+                    }
+            },
+
+            // recv(band) -> ev_batch => {
+            //      match ev_batch {
+            //             Ok(_) => {
+            //                // info!("{:?}",event_batch);
+            //             },
+            //             Err(e) => panic!("select event fail, cause by: {}",e.to_string()),
+            //         }
+            // },
+
+        }
+    }
+}
+
+fn create_subscribe(rt: Arc<TokioRuntime>, host: String, chain_name: String) -> Receiver<Result<EventBatch, Error>> {
+    let (mut monitor, event_receiver, _monitor_cmd) = crate::subscribe::monitor::EventMonitor::new(
+        chain_name.parse().unwrap(),
+        host.parse().unwrap(),
+        rt,
+    )
+    .unwrap();
+
+    monitor.subscribe().map_err(Kind::EventMonitor).unwrap();
+    thread::spawn(move || monitor.run());
+    event_receiver
+}
 
 #[cfg(test)]
 mod tests {
@@ -34,10 +87,37 @@ mod tests {
     }
 
     #[test_env_log::test]
-    fn test_event_subscribe() {
+    fn test_event_subscribe_fxdex() {
         let rt = Arc::new(TokioRuntime::new().unwrap());
         let (mut monitor, event_receiver, _monitor_cmd) = subscribe::monitor::EventMonitor::new(
             "fxdex".to_string().parse().unwrap(),
+            "ws://localhost:26657/websocket".parse().unwrap(),
+            rt,
+        )
+        .unwrap();
+
+        monitor.subscribe().map_err(Kind::EventMonitor).unwrap();
+        thread::spawn(move || monitor.run());
+
+        loop {
+            select! {
+                recv(event_receiver) -> ev_batch => {
+                     match ev_batch {
+                            Ok(event_batch) => {
+                               // info!("{:?}",event_batch);
+                            },
+                            Err(e) => panic!("select event fail, cause by: {}",e.to_string()),
+                        }
+                }
+            }
+        }
+    }
+
+    #[test_env_log::test]
+    fn test_event_subscribe_band() {
+        let rt = Arc::new(TokioRuntime::new().unwrap());
+        let (mut monitor, event_receiver, _monitor_cmd) = subscribe::monitor::EventMonitor::new(
+            "bandchain".to_string().parse().unwrap(),
             "ws://localhost:21657/websocket".parse().unwrap(),
             rt,
         )
@@ -51,10 +131,9 @@ mod tests {
                 recv(event_receiver) -> ev_batch => {
                      match ev_batch {
                             Ok(event_batch) => {
-                               info!("{:?}",event_batch);
-                               return;
+                               // info!("{:?}",event_batch);
                             },
-                            Err(e) => panic!(e.to_string()),
+                            Err(e) => panic!("select event fail, cause by: {}",e.to_string()),
                         }
                 }
             }

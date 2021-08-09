@@ -433,12 +433,12 @@ impl EventMonitor {
     }
 }
 
-/// Collect the IBC events from an RPC event
+/// Collect the events from an RPC event
 fn collect_events(
     chain_id: &ChainId,
     event: RpcEvent,
 ) -> impl Stream<Item = Result<(Height, Event)>> {
-    let events = crate::subscribe::transform::get_all_events(chain_id, event).unwrap_or_default();
+    let events = crate::subscribe::transform::extract_rpc_event(chain_id, event).unwrap_or_default();
     stream::iter(events).map(Ok)
 }
 

@@ -7,6 +7,8 @@ use prost::alloc::fmt::Formatter;
 use std::fmt;
 use tendermint::block::Height;
 
+pub mod dex;
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 pub struct NewBlock {
     pub height: Height,

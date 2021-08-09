@@ -58,3 +58,4 @@ pub trait Chain: Sized {
     // query event from tx response
     fn query_events_from_txs(&self, request: QueryTxRequest) -> Result<Vec<Event>, Error>;
 }
+
